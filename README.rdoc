@@ -6,21 +6,13 @@ Ruby/XSLT is a simple XSLT class based on libxml <http://xmlsoft.org/> and libxs
 
 == Licence
 
-Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Gregoire Lejeune <gregoire dot lejeune at free dot fr>
+Copyright (C) 2003-2010 Gregoire Lejeune <gregoire dot lejeune at free dot fr>
 
 Ruby/XSLT is freely distributable according to the terms of the
 GNU General Public License (see the file 'COPYING').
 
 This program is distributed without any warranty. See the file
 'COPYING' for details.
-
-=== CVS access
-The CVS repository is available at rubyforge.org[http://rubyforge.org/projects/ruby-asp]. You can browse[http://rubyforge.org/cgi-bin/viewcvs.cgi/ruby-xslt/?cvsroot=ruby-asp] it or access it via anonymous access :
-
-  cvs -d :pserver:anonymous@rubyforge.org:/var/cvs/ruby-asp login
-  cvs -d :pserver:anonymous@rubyforge.org:/var/cvs/ruby-asp checkout ruby-xslt
-
-See this page[http://rubyforge.org/scm/?group_id=423] for more informations
 
 == INSTALLATION
 

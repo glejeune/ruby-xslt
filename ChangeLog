@@ -1,3 +1,7 @@
+0.9.7 :
+* Ruby 1.9
+* Bug correction (Issue #1)
+
 0.9.6 :
 * "found and patched some serious memory leaks" (thanks to Tom)
 

@@ -23,6 +23,9 @@ Stéphane Mariel <smariel at rift dot fr>
 Tom <tom@spongecell.com>
 * Found and patched some serious memory leaks
 
+Rian Bigg
+* Ruby 1.9 compatible version
+
 == Thanks to :
 
 knu <knu at freebsd dot org> for FreeBSD port (see http://www.freshports.org/textproc/ruby-xslt/)
