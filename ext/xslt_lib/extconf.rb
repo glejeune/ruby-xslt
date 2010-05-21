@@ -44,6 +44,7 @@ dir_config( 'xslt' )
 
 have_library "xml2", "xmlParseDoc" || crash("need libxml2")
 have_library "xslt", "xsltParseStylesheetFile" || crash("need libxslt")
+have_header "rubyio.h"
 
 if enable_config("exslt", true)
   have_library "exslt", "exsltRegisterAll"
