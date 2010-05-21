@@ -9,20 +9,20 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Gregoire Lejeune"]
-  s.date = %q{2010-05-21}
+  s.date = %q{2010-05-22}
   s.description = %q{Ruby/XSLT is a simple XSLT class based on libxml <http://xmlsoft.org/> and libxslt <http://xmlsoft.org/XSLT/>}
   s.email = %q{gregoire.lejeune@free.fr}
   s.extensions = ["ext/xslt_lib/extconf.rb"]
   s.extra_rdoc_files = [
     "ChangeLog",
-     "README"
+     "README.rdoc"
   ]
   s.files = [
     ".gitignore",
      "AUTHORS",
      "COPYING",
      "ChangeLog",
-     "README",
+     "README.rdoc",
      "Rakefile",
      "VERSION",
      "ext/xslt_lib/extconf.rb",
@@ -37,6 +37,7 @@ Gem::Specification.new do |s|
      "ext/xslt_lib/xslt.h",
      "ext/xslt_lib/xslt_lib.c",
      "lib/xml/xslt.rb",
+     "ruby-xslt.gemspec",
      "setup.rb",
      "test/subdir/result.xsl",
      "test/subdir/test.xsl",
@@ -50,7 +51,17 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Ruby/XSLT is a simple XSLT class based on libxml <http://xmlsoft.org/> and libxslt <http://xmlsoft.org/XSLT/>}
   s.test_files = [
-    "test/test.rb"
+    "test/test.rb",
+     "examples/bug.rb",
+     "examples/fuzface.rb",
+     "examples/fuzface_data.rb",
+     "examples/fuzface_error.rb",
+     "examples/fuzface_REXML.rb",
+     "examples/fuzface_to_s.rb",
+     "examples/fuzface_XML-Simple.rb",
+     "examples/info.rb",
+     "examples/test_functions.rb",
+     "examples/test_parameters.rb"
   ]
 
   if s.respond_to? :specification_version then

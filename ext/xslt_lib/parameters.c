@@ -40,7 +40,7 @@ VALUE process_pair( VALUE pair, VALUE rbparams ) {
   Check_Type( pair, T_ARRAY );
 
   key   = RARRAY_PTR(pair)[0];
-  value = RARRAY_PTR(pair)[1];
+  value = rb_obj_clone( RARRAY_PTR(pair)[1] );
   
   Check_Type( key, T_STRING );
   Check_Type( value, T_STRING );
