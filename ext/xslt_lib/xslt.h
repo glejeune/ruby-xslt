@@ -57,8 +57,8 @@
 #include "parameters.h"
 #include "extfunc.h"
 
-#define RUBY_XSLT_VERSION  "0.9.6"
-#define RUBY_XSLT_VERNUM   096
+#define RUBY_XSLT_VERSION  "0.9.7"
+#define RUBY_XSLT_VERNUM   097
 
 #define RUBY_XSLT_XSLSRC_TYPE_NULL     0
 #define RUBY_XSLT_XSLSRC_TYPE_STR      1
