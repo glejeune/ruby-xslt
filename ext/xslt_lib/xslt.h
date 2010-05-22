@@ -22,7 +22,7 @@
 #define __RUBY_XSLT_H__
 
 #include <ruby.h>
-#if defined(HAVE_RUBYIO_H)
+#ifdef RUBY_1_8
 	#include <rubyio.h>
 #else
 	#include <ruby/io.h>
