@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Gregoire Lejeune"]
-  s.date = %q{2010-06-11}
+  s.date = %q{2010-06-28}
   s.description = %q{Ruby/XSLT is a simple XSLT class based on libxml <http://xmlsoft.org/> and libxslt <http://xmlsoft.org/XSLT/>}
   s.email = %q{gregoire.lejeune@free.fr}
   s.extensions = ["ext/xslt_lib/extconf.rb"]
