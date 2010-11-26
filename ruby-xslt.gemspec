@@ -51,17 +51,7 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Ruby/XSLT is a simple XSLT class based on libxml <http://xmlsoft.org/> and libxslt <http://xmlsoft.org/XSLT/>}
   s.test_files = [
-    "test/test.rb",
-     "examples/bug.rb",
-     "examples/fuzface.rb",
-     "examples/fuzface_data.rb",
-     "examples/fuzface_error.rb",
-     "examples/fuzface_REXML.rb",
-     "examples/fuzface_to_s.rb",
-     "examples/fuzface_XML-Simple.rb",
-     "examples/info.rb",
-     "examples/test_functions.rb",
-     "examples/test_parameters.rb"
+    "test/test.rb"
   ]
 
   if s.respond_to? :specification_version then
