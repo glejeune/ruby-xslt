@@ -11,6 +11,7 @@ begin
     gem.homepage = "http://github.com/glejeune/ruby-xslt"
     gem.authors = ["Gregoire Lejeune"]
     gem.extensions = FileList["ext/**/extconf.rb"].to_a
+    gem.test_files = Dir.glob('test/**/*.rb')
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
