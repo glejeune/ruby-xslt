@@ -113,14 +113,14 @@ VALUE object_to_string( VALUE object ) {
   switch( TYPE( object ) ) {
     case T_STRING:
       {
-        if( isFile( STR2CSTR( object ) ) == 0 ) {
+        if( isFile( StringValuePtr( object ) ) == 0 ) {
           vOut = object;
         } else {
           long iBufferLength;
           long iCpt;
           char *xBuffer;
 
-          FILE* fStream = fopen( STR2CSTR( object ), "r" );
+          FILE* fStream = fopen( StringValuePtr( object ), "r" );
           if( fStream == NULL ) {
             return( Qnil );
           }
@@ -178,7 +178,7 @@ int objectIsFile( VALUE object ) {
   switch( TYPE( object ) ) {
     case T_STRING:
       {
-        if( isFile( STR2CSTR( object ) ) == 0 )
+        if( isFile( StringValuePtr( object ) ) == 0 )
           bOut = 0;
         else
           bOut = 1;

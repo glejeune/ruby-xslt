@@ -20,7 +20,8 @@
 
 char * getRubyObjectName( VALUE rb_Object ) {
   VALUE klass = rb_funcall( rb_Object, rb_intern( "class" ), 0 );
-  return( STR2CSTR( rb_funcall( klass, rb_intern( "to_s" ), 0 ) ) );
+	VALUE tmp = rb_funcall( klass, rb_intern( "to_s" ), 0 );
+  return( StringValuePtr( tmp ) );
 }
 
 int isFile( const char *filename ) {

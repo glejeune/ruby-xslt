@@ -139,7 +139,7 @@ VALUE ruby_xslt_xml_obj_set( VALUE self, VALUE xml_doc_obj ) {
 		xmlFreeDoc(pRbTxslt->tXMLDocument);
 	}
 	
-  pRbTxslt->tXMLDocument = parse_xml( STR2CSTR( pRbTxslt->xXmlData ), pRbTxslt->iXmlType );
+  pRbTxslt->tXMLDocument = parse_xml( StringValuePtr( pRbTxslt->xXmlData ), pRbTxslt->iXmlType );
   if( pRbTxslt->tXMLDocument == NULL ) {
     rb_raise( eXSLTParsingError, "XML parsing error" );
   }
@@ -238,7 +238,7 @@ VALUE ruby_xslt_xsl_obj_set( VALUE self, VALUE xsl_doc_obj ) {
 	  xsltFreeStylesheet(pRbTxslt->tParsedXslt);
 	}
 	
-  pRbTxslt->tParsedXslt = parse_xsl( STR2CSTR( pRbTxslt->xXslData ), pRbTxslt->iXslType );
+  pRbTxslt->tParsedXslt = parse_xsl( StringValuePtr( pRbTxslt->xXslData ), pRbTxslt->iXslType );
   if( pRbTxslt->tParsedXslt == NULL ) {
     rb_raise( eXSLTParsingError, "XSL Stylesheet parsing error" );
   }
@@ -305,7 +305,8 @@ VALUE ruby_xslt_serve( VALUE self ) {
       MEMZERO( pxParams, void *, pRbTxslt->iNbParams );
 
       for( iCpt = 0; iCpt <= pRbTxslt->iNbParams - 3; iCpt++ ) {
-        pxParams[iCpt] = STR2CSTR( rb_ary_entry( pRbTxslt->pxParams, iCpt ) );
+				VALUE tmp = rb_ary_entry( pRbTxslt->pxParams, iCpt );
+        pxParams[iCpt] = StringValuePtr( tmp );
       }
     }
     
@@ -342,12 +343,12 @@ VALUE ruby_xslt_save( VALUE self, VALUE xOutFilename ) {
   rOut = ruby_xslt_serve( self );
   
   if( rOut != Qnil ) {
-    xOut = STR2CSTR( rOut );
+    xOut = StringValuePtr( rOut );
   
-    fOutFile = fopen( STR2CSTR( xOutFilename ), "w" );
+    fOutFile = fopen( StringValuePtr( xOutFilename ), "w" );
     if( fOutFile == NULL ) {
       free( xOut );
-      rb_raise( rb_eRuntimeError, "Can't create file %s\n", STR2CSTR( xOutFilename ) );
+      rb_raise( rb_eRuntimeError, "Can't create file %s\n", StringValuePtr( xOutFilename ) );
       rOut = Qnil;
     } else {
       fwrite( xOut, 1, strlen( xOut ), fOutFile );
@@ -480,7 +481,7 @@ VALUE ruby_xslt_media_type( VALUE self ) {
  * internal use only.
  */
  VALUE ruby_xslt_reg_function( VALUE class, VALUE namespace, VALUE name ) {
-   xsltRegisterExtModuleFunction( BAD_CAST STR2CSTR(name), BAD_CAST STR2CSTR(namespace), xmlXPathFuncCallback );
+   xsltRegisterExtModuleFunction( BAD_CAST StringValuePtr(name), BAD_CAST StringValuePtr(namespace), xmlXPathFuncCallback );
 
    return Qnil;
  }
@@ -496,7 +497,7 @@ VALUE ruby_xslt_to_s( VALUE self ) {
 
   Data_Get_Struct( self, RbTxslt, pRbTxslt );
 
-  //vXSLTSheet = xsltParseStylesheetDoc( xmlParseMemory( STR2CSTR( pRbTxslt->xXslData ), strlen( STR2CSTR( pRbTxslt->xXslData ) ) ) );
+  //vXSLTSheet = xsltParseStylesheetDoc( xmlParseMemory( StringValuePtr( pRbTxslt->xXslData ), strlen( StringValuePtr( pRbTxslt->xXslData ) ) ) );
   vXSLTSheet = pRbTxslt->tParsedXslt;
   if (vXSLTSheet == NULL) return Qnil;
 

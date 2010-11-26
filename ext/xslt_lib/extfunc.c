@@ -127,7 +127,7 @@ xmlXPathObjectPtr value2xpathObj (VALUE val) {
       xmlChar *str;
 
     // we need the Strdup (this is the major bugfix for 0.8.1)
-      str = xmlStrdup((const xmlChar *) STR2CSTR(val));
+      str = xmlStrdup((const xmlChar *) StringValuePtr(val));
       ret = xmlXPathWrapString(str);
     }
       break;
@@ -152,7 +152,7 @@ xmlXPathObjectPtr value2xpathObj (VALUE val) {
       if( strcmp( getRubyObjectName( val ), "REXML::Document" ) == 0 || strcmp(getRubyObjectName( val ),  "REXML::Element") == 0 ) {
 
         VALUE to_s = rb_funcall( val, rb_intern( "to_s" ), 0 );
-        xmlDocPtr doc = xmlParseDoc((xmlChar *) STR2CSTR(to_s));
+        xmlDocPtr doc = xmlParseDoc((xmlChar *) StringValuePtr(to_s));
 
         ret = xmlXPathNewNodeSet((xmlNode *)doc->children);
         break;
@@ -161,7 +161,7 @@ xmlXPathObjectPtr value2xpathObj (VALUE val) {
 
         xmlChar *str;
 
-        str = xmlStrdup((const xmlChar *) STR2CSTR(to_s));
+        str = xmlStrdup((const xmlChar *) StringValuePtr(to_s));
         ret = xmlXPathWrapString(str);
         break;
       }

@@ -45,7 +45,7 @@ VALUE process_pair( VALUE pair, VALUE rbparams ) {
   Check_Type( key, T_STRING );
   Check_Type( value, T_STRING );
 
-  xValue = STR2CSTR( value );
+  xValue = StringValuePtr( value );
   if( xValue[0] != '\'' && xValue[strlen( xValue ) - 1] != '\'' ) {
     value = rb_str_concat( value, rb_str_new2( "'" ) );
     value = rb_str_concat( rb_str_new2( "'" ), value );
