@@ -14,13 +14,13 @@ Gem::Specification.new do |s|
   s.email = "gregoire.lejeune@free.fr"
   s.extensions = ["ext/xslt_lib/extconf.rb"]
   s.extra_rdoc_files = [
-    "ChangeLog",
+    "ChangeLog.rdoc",
     "README.rdoc"
   ]
   s.files = [
-    "AUTHORS",
+    "AUTHORS.rdoc",
     "COPYING",
-    "ChangeLog",
+    "ChangeLog.rdoc",
     "README.rdoc",
     "Rakefile",
     "VERSION",
@@ -46,8 +46,8 @@ Gem::Specification.new do |s|
   ]
   s.homepage = "http://github.com/glejeune/ruby-xslt"
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.10"
-  s.summary = "Ruby/XSLT is a simple XSLT class based on libxml <http://xmlsoft.org/> and libxslt <http://xmlsoft.org/XSLT/>"
+  s.rubygems_version = "1.8.15"
+  s.summary = "Ruby/XSLT is a simple XSLT class"
   s.test_files = ["test/test.rb"]
 
   if s.respond_to? :specification_version then
