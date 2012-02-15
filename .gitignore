@@ -17,6 +17,7 @@ tmtags
 coverage
 rdoc
 pkg
+.rake_tasks
 
 ## PROJECT::SPECIFIC
 ext/xslt_lib/Makefile
