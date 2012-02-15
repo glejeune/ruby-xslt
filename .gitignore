@@ -20,5 +20,6 @@ pkg
 
 ## PROJECT::SPECIFIC
 ext/xslt_lib/Makefile
+ext/xslt_lib/extconf.h
 ext/xslt_lib/mkmf.log
 examples

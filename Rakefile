@@ -5,13 +5,14 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "ruby-xslt"
-    gem.summary = %Q{Ruby/XSLT is a simple XSLT class based on libxml <http://xmlsoft.org/> and libxslt <http://xmlsoft.org/XSLT/> }
-    gem.description = gem.summary
+    gem.summary = %Q{Ruby/XSLT is a simple XSLT class}
+    gem.description = %Q{Ruby/XSLT is a simple XSLT class based on libxml <http://xmlsoft.org/> and libxslt <http://xmlsoft.org/XSLT/>}
     gem.email = "gregoire.lejeune@free.fr"
     gem.homepage = "http://github.com/glejeune/ruby-xslt"
     gem.authors = ["Gregoire Lejeune"]
     gem.extensions = FileList["ext/**/extconf.rb"].to_a
     gem.test_files = Dir.glob('test/**/*.rb')
+    gem.add_development_dependency 'rdoc'
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
@@ -42,12 +43,12 @@ task :test => :check_dependencies
 
 task :default => :test
 
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
+require 'rdoc/task'
+RDoc::Task.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "syncftp #{version}"
+  rdoc.title = "Ruby/XSLT #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end

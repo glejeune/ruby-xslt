@@ -18,18 +18,6 @@
 
 /* Please see the LICENSE file for copyright and distribution information */
 
-#ifndef __RUBY_XSLT_H__
-#define __RUBY_XSLT_H__
-
-#include <ruby.h>
-#ifdef RUBY_1_8
-	#include <rubyio.h>
-#else
-	#include <ruby/io.h>
-#endif
-
-#include <string.h>
-
 #include <libxml/xmlmemory.h>
 #include <libxml/debugXML.h>
 #include <libxml/HTMLtree.h>
@@ -47,6 +35,18 @@
 #ifdef USE_EXSLT
   #include <libexslt/exslt.h>
 #endif
+
+#ifndef __RUBY_XSLT_H__
+#define __RUBY_XSLT_H__
+
+#include <ruby.h>
+#ifdef RUBY_1_8
+	#include <rubyio.h>
+#else
+	#include <ruby/io.h>
+#endif
+
+#include <string.h>
 
 #ifdef MEMWATCH
   #include "memwatch.h"
