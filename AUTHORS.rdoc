@@ -3,7 +3,7 @@
 Gregoire Lejeune <gregoire dot lejeune at free dot fr>
 * Maintener
 
-Eust·quio "TaQ" Rangel <eustaquiorangel at yahoo dot com>
+Eust√°quio "TaQ" Rangel <eustaquiorangel at yahoo dot com>
 * Add parameters support
 
 Brendan Taylor <whateley at gmail dot com>
@@ -17,7 +17,7 @@ Brendan Taylor <whateley at gmail dot com>
 Pau Garcia i Quiles <pgquiles at elpauer dot org>
 * gemspec
 
-StÈphane Mariel <smariel at rift dot fr>
+St√©phane Mariel <smariel at rift dot fr>
 * Bugfix in extfunc.c
 
 Tom <tom@spongecell.com>

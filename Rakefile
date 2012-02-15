@@ -49,6 +49,8 @@ RDoc::Task.new do |rdoc|
 
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title = "Ruby/XSLT #{version}"
-  rdoc.rdoc_files.include('README*')
+  rdoc.main = "README.rdoc"
+  rdoc.rdoc_files.include('*.rdoc')
   rdoc.rdoc_files.include('lib/**/*.rb')
+  rdoc.rdoc_files.include('ext/**/*.c')
 end
