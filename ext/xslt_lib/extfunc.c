@@ -59,12 +59,17 @@ VALUE xpathObj2value(xmlXPathObjectPtr obj, xmlDocPtr doc)
           node = obj->nodesetval->nodeTab[i];
 
           if( node->type == XML_ELEMENT_NODE ) {
+            VALUE cREXML;
+            VALUE cDocument;
+            VALUE rDocument;
+            VALUE rElement;
+
             xmlNodeDump(buff, doc, node, 0, 0);
 
-            VALUE cREXML = rb_const_get(rb_cObject, rb_intern("REXML"));
-            VALUE cDocument = rb_const_get(cREXML, rb_intern("Document"));
-            VALUE rDocument = rb_funcall(cDocument, rb_intern("new"), 1,rb_str_new2((char *)buff->content));
-            VALUE rElement = rb_funcall(rDocument, rb_intern("root"), 0);
+            cREXML = rb_const_get(rb_cObject, rb_intern("REXML"));
+            cDocument = rb_const_get(cREXML, rb_intern("Document"));
+            rDocument = rb_funcall(cDocument, rb_intern("new"), 1,rb_str_new2((char *)buff->content));
+            rElement = rb_funcall(rDocument, rb_intern("root"), 0);
 
             rb_ary_push(ret, rElement);
           
@@ -135,7 +140,7 @@ xmlXPathObjectPtr value2xpathObj (VALUE val) {
       ret = xmlXPathNewNodeSet(NULL);
       break;
     case T_ARRAY: {
-      int i,j;
+      long i,j;
       ret = xmlXPathNewNodeSet(NULL);
 
       for(i = RARRAY_LEN(val); i > 0; i--) {

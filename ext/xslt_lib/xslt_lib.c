@@ -493,7 +493,7 @@ VALUE ruby_xslt_to_s( VALUE self ) {
   VALUE vStrOut;
   RbTxslt *pRbTxslt;
   xsltStylesheetPtr vXSLTSheet = NULL;
-  char *xKlassName = rb_class2name( CLASS_OF( self ) );
+  const char *xKlassName = rb_class2name( CLASS_OF( self ) );
 
   Data_Get_Struct( self, RbTxslt, pRbTxslt );
 
