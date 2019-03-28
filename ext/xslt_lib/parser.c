@@ -120,7 +120,7 @@ VALUE object_to_string( VALUE object ) {
           long iCpt;
           char *xBuffer;
 
-          FILE* fStream = fopen( StringValuePtr( object ), "r" );
+          FILE* fStream = fopen( StringValuePtr( object ), "rb" );
           if( fStream == NULL ) {
             return( Qnil );
           }
