@@ -28,16 +28,12 @@ void ruby_xslt_free( RbTxslt *pRbTxslt ) {
   if( pRbTxslt != NULL ) {
     if( pRbTxslt->tParsedXslt != NULL )
       xsltFreeStylesheet(pRbTxslt->tParsedXslt);
-    
+
     if( pRbTxslt->tXMLDocument != NULL )
       xmlFreeDoc(pRbTxslt->tXMLDocument);
-    
+
     free( pRbTxslt );
   }
-  
-  xsltCleanupGlobals();
-  xmlCleanupParser();
-  xmlMemoryDump();
 }
 
 void ruby_xslt_mark( RbTxslt *pRbTxslt ) {
@@ -45,19 +41,19 @@ void ruby_xslt_mark( RbTxslt *pRbTxslt ) {
   if( !NIL_P(pRbTxslt->xXmlData) )        rb_gc_mark( pRbTxslt->xXmlData );
   if( !NIL_P(pRbTxslt->oXmlObject) )      rb_gc_mark( pRbTxslt->oXmlObject );
   if( !NIL_P(pRbTxslt->xXmlString) )      rb_gc_mark( pRbTxslt->xXmlString );
-  
+
   if( !NIL_P(pRbTxslt->xXslData) )        rb_gc_mark( pRbTxslt->xXslData );
   if( !NIL_P(pRbTxslt->oXslObject) )      rb_gc_mark( pRbTxslt->oXslObject );
   if( !NIL_P(pRbTxslt->xXslString) )      rb_gc_mark( pRbTxslt->xXslString );
-  
+
   if( !NIL_P(pRbTxslt->xXmlResultCache) ) rb_gc_mark( pRbTxslt->xXmlResultCache );
-  
+
   if( !NIL_P(pRbTxslt->pxParams) )        rb_gc_mark( pRbTxslt->pxParams );
 }
 
-/** 
+/**
  * oXSLT = XML::XSLT::new()
- * 
+ *
  * Create a new XML::XSLT object
  */
 VALUE ruby_xslt_new( VALUE class ) {
@@ -72,23 +68,23 @@ VALUE ruby_xslt_new( VALUE class ) {
   pRbTxslt->oXmlObject      = Qnil;
   pRbTxslt->xXmlString      = Qnil;
   pRbTxslt->tXMLDocument    = NULL;
-  
+
   pRbTxslt->iXslType        = RUBY_XSLT_XSLSRC_TYPE_NULL;
   pRbTxslt->xXslData        = Qnil;
   pRbTxslt->oXslObject      = Qnil;
   pRbTxslt->xXslString      = Qnil;
   pRbTxslt->tParsedXslt     = NULL;
-  
+
   pRbTxslt->iXmlResultType  = RUBY_XSLT_XMLSRC_TYPE_NULL;
   pRbTxslt->xXmlResultCache = Qnil;
-  
+
   pRbTxslt->pxParams        = Qnil;
   pRbTxslt->iNbParams       = 0;
-  
+
   xmlInitMemory();
   xmlSubstituteEntitiesDefault( 1 );
   xmlLoadExtDtdDefaultValue = 1;
-  
+
   return( Data_Wrap_Struct( class, ruby_xslt_mark, ruby_xslt_free, pRbTxslt ) );
 }
 
@@ -102,11 +98,11 @@ VALUE ruby_xslt_new( VALUE class ) {
  * Set XML data.
  *
  * Parameter can be type String, REXML::Document, XML::Smart::Dom or Filename
- * 
+ *
  * Examples :
  *  # Parameter as String
  *  oXSLT.xml = <<XML
- *  <?xml version="1.0" encoding="UTF-8"?> 
+ *  <?xml version="1.0" encoding="UTF-8"?>
  *  <test>This is a test string</test>
  *  XML
  *
@@ -132,20 +128,20 @@ VALUE ruby_xslt_xml_obj_set( VALUE self, VALUE xml_doc_obj ) {
   }
   pRbTxslt->iXmlType   = RUBY_XSLT_XMLSRC_TYPE_STR;
   pRbTxslt->xXmlData   = pRbTxslt->xXmlString;
-  
+
   pRbTxslt->iXmlResultType = RUBY_XSLT_XMLSRC_TYPE_NULL;
 
 	if( pRbTxslt->tXMLDocument != NULL ) {
 		xmlFreeDoc(pRbTxslt->tXMLDocument);
 	}
-	
+
   pRbTxslt->tXMLDocument = parse_xml( StringValuePtr( pRbTxslt->xXmlData ), pRbTxslt->iXmlType );
   if( pRbTxslt->tXMLDocument == NULL ) {
     rb_raise( eXSLTParsingError, "XML parsing error" );
   }
-  
+
   pRbTxslt->iXmlType   = RUBY_XSLT_XMLSRC_TYPE_PARSED;
-  
+
   return( Qnil );
 }
 
@@ -191,7 +187,7 @@ VALUE ruby_xslt_xml_2obj_get( VALUE self ) {
  * Set XSL data.
  *
  * Parameter can be type String, REXML::Document, XML::Smart::Dom or Filename
- * 
+ *
  * Examples :
  *  # Parameter as String
  *  oXSLT.xsl = <<XML
@@ -223,7 +219,7 @@ VALUE ruby_xslt_xsl_obj_set( VALUE self, VALUE xsl_doc_obj ) {
   if( pRbTxslt->xXslString == Qnil ) {
     rb_raise( eXSLTError, "Can't get XSL data" );
   }
-  
+
   if( objectIsFile( xsl_doc_obj ) ) {
     pRbTxslt->iXslType = RUBY_XSLT_XSLSRC_TYPE_FILE;
     pRbTxslt->xXslData = pRbTxslt->oXslObject;
@@ -231,18 +227,18 @@ VALUE ruby_xslt_xsl_obj_set( VALUE self, VALUE xsl_doc_obj ) {
     pRbTxslt->iXslType = RUBY_XSLT_XSLSRC_TYPE_STR;
     pRbTxslt->xXslData = pRbTxslt->xXslString;
   }
-  
+
   pRbTxslt->iXmlResultType = RUBY_XSLT_XMLSRC_TYPE_NULL;
-  
+
 	if( pRbTxslt->tParsedXslt != NULL ) {
 	  xsltFreeStylesheet(pRbTxslt->tParsedXslt);
 	}
-	
+
   pRbTxslt->tParsedXslt = parse_xsl( StringValuePtr( pRbTxslt->xXslData ), pRbTxslt->iXslType );
   if( pRbTxslt->tParsedXslt == NULL ) {
     rb_raise( eXSLTParsingError, "XSL Stylesheet parsing error" );
   }
-  
+
   pRbTxslt->iXslType   = RUBY_XSLT_XSLSRC_TYPE_PARSED;
 
   return( Qnil );
@@ -284,23 +280,23 @@ VALUE ruby_xslt_xsl_2obj_get( VALUE self ) {
  * ----------------------------------------------------------------------------
  */
 
-/** 
+/**
  * output_string = oXSLT.serve( )
  *
- * Return the stylesheet transformation 
+ * Return the stylesheet transformation
  */
 VALUE ruby_xslt_serve( VALUE self ) {
   RbTxslt *pRbTxslt;
   char *xOut;
   char **pxParams = NULL;
-  
+
   Data_Get_Struct( self, RbTxslt, pRbTxslt );
 
   if( pRbTxslt->iXmlResultType == RUBY_XSLT_XMLSRC_TYPE_NULL ) {
 
     if( pRbTxslt->pxParams != Qnil ){
       int iCpt;
-    
+
       pxParams = (char **)ALLOCA_N( void *, pRbTxslt->iNbParams );
       MEMZERO( pxParams, void *, pRbTxslt->iNbParams );
 
@@ -309,7 +305,7 @@ VALUE ruby_xslt_serve( VALUE self ) {
         pxParams[iCpt] = StringValuePtr( tmp );
       }
     }
-    
+
     if( pRbTxslt->iXslType != RUBY_XSLT_XSLSRC_TYPE_NULL &&
         pRbTxslt->iXmlType != RUBY_XSLT_XMLSRC_TYPE_NULL ) {
       xOut = parse( pRbTxslt->tParsedXslt, pRbTxslt->tXMLDocument, pxParams );
@@ -330,8 +326,8 @@ VALUE ruby_xslt_serve( VALUE self ) {
   return( pRbTxslt->xXmlResultCache );
 }
 
-/** 
- * oXSLT.save( "result.xml" ) 
+/**
+ * oXSLT.save( "result.xml" )
  *
  * Save the stylesheet transformation to file
  */
@@ -339,12 +335,12 @@ VALUE ruby_xslt_save( VALUE self, VALUE xOutFilename ) {
   char *xOut;
   VALUE rOut;
   FILE *fOutFile;
-  
+
   rOut = ruby_xslt_serve( self );
-  
+
   if( rOut != Qnil ) {
     xOut = StringValuePtr( rOut );
-  
+
     fOutFile = fopen( StringValuePtr( xOutFilename ), "w" );
     if( fOutFile == NULL ) {
       free( xOut );
@@ -365,7 +361,7 @@ VALUE ruby_xslt_save( VALUE self, VALUE xOutFilename ) {
 
 #ifdef USE_ERROR_HANDLER
 /**
- * Brendan Taylor 
+ * Brendan Taylor
  * whateley@gmail.com
  */
 /*
@@ -415,20 +411,20 @@ void ruby_xslt_error_handler(void *ctx, const char *msg, ...) {
 
 /**
  * parameters support, patch from :
- * 
+ *
  * Eustáquio "TaQ" Rangel
  * eustaquiorangel@yahoo.com
  * http://beam.to/taq
- * 
+ *
  * Corrections : Greg
  */
 /**
- * oXSLT.parameters={ "key" => "value", "key" => "value", ... } 
+ * oXSLT.parameters={ "key" => "value", "key" => "value", ... }
  */
 VALUE ruby_xslt_parameters_set( VALUE self, VALUE parameters ) {
   RbTxslt *pRbTxslt;
   Check_Type( parameters, T_HASH );
-    
+
   Data_Get_Struct( self, RbTxslt, pRbTxslt );
 
   if( !NIL_P(parameters) ){
@@ -438,7 +434,7 @@ VALUE ruby_xslt_parameters_set( VALUE self, VALUE parameters ) {
     pRbTxslt->iNbParams = FIX2INT( rb_funcall( parameters, rb_intern("size"), 0, 0 ) ) * 2 + 2;
     pRbTxslt->iXmlResultType = RUBY_XSLT_XMLSRC_TYPE_NULL;
   }
-    
+
   return( Qnil );
 }
 
@@ -449,7 +445,7 @@ VALUE ruby_xslt_parameters_set( VALUE self, VALUE parameters ) {
 /**
  * media type information, path from :
  *
- * Brendan Taylor 
+ * Brendan Taylor
  * whateley@gmail.com
  *
  */
@@ -461,11 +457,11 @@ VALUE ruby_xslt_parameters_set( VALUE self, VALUE parameters ) {
 VALUE ruby_xslt_media_type( VALUE self ) {
   RbTxslt *pRbTxslt;
   xsltStylesheetPtr vXSLTSheet = NULL;
-  
+
   Data_Get_Struct( self, RbTxslt, pRbTxslt );
 
   vXSLTSheet = pRbTxslt->tParsedXslt;
-  
+
   if ( (vXSLTSheet == NULL) || (vXSLTSheet->mediaType == NULL) ) {
     return Qnil;
   } else {
@@ -486,8 +482,8 @@ VALUE ruby_xslt_media_type( VALUE self ) {
    return Qnil;
  }
 
-/** 
- * string = oXSLT.xsl_to_s( ) 
+/**
+ * string = oXSLT.xsl_to_s( )
  */
 VALUE ruby_xslt_to_s( VALUE self ) {
   VALUE vStrOut;
@@ -564,7 +560,7 @@ void Init_xslt_lib( void ) {
   rb_define_const( cXSLT, "NAMESPACE_SAXON",      rb_str_new2((char *)XSLT_SAXON_NAMESPACE) );
   rb_define_const( cXSLT, "NAMESPACE_XT",         rb_str_new2((char *)XSLT_XT_NAMESPACE) );
   rb_define_const( cXSLT, "NAMESPACE_XALAN",      rb_str_new2((char *)XSLT_XALAN_NAMESPACE) );
-  
+
   rb_define_const( cXSLT, "RUBY_XSLT_VERSION",    rb_str_new2(RUBY_XSLT_VERSION) );
 
   rb_define_singleton_method( cXSLT, "new", ruby_xslt_new, 0 );
